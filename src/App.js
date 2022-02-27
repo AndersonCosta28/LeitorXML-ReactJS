@@ -17,7 +17,7 @@ export default function App() {
             method: 'POST',
             body: data,
         }
-        fetch('http://localhost:8080/uploads', config)
+        fetch('https://leitorxml-backend.herokuapp.com/uploads', config)
             .then(res => res.json())
             .then(data => { 
                 sessionStorage.setItem('DadosDoBackEnd', JSON.stringify(data))
