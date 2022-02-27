@@ -1,40 +1,46 @@
 #form {
   margin-left: 2%;
 }
-.main{
-  display: flex;
-  /* margin: 50px; */
+
+.row {
+  --bs-gutter-x: 0
 }
 
-.table1{
-  width: 25%; max-height: 500px;  overflow:auto; margin: 10px;
+.table1 {
+  width: 25%;
+  max-height: 500px;
+  overflow: auto;
+  margin: 10px; 
 }
 
-.table2{
-  width: 72%; max-height: 500px;  overflow:auto; margin: 10px;
+.table2 {
+  width: 68%;
+  max-height: 500px;
+  overflow: auto;
+  margin: 10px;
 }
 
-.titulo{
+.titulo {
   text-align: center;
 }
 .tela {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    min-height: 75vh;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: 75vh;
+}
+
+.cloader {
+  animation: is-rotating 1s infinite;
+  border: 6px solid #e5e5e5;
+  border-radius: 50%;
+  border-top-color: #51d4db;
+  height: 50px;
+  width: 50px;
+}
+
+@keyframes is-rotating {
+  to {
+    transform: rotate(1turn);
   }
-  
-  .cloader {
-    animation: is-rotating 1s infinite;
-    border: 6px solid #e5e5e5;
-    border-radius: 50%;
-    border-top-color: #51d4db;
-    height: 50px;
-    width: 50px;
-  }
-  
-  @keyframes is-rotating {
-    to {
-      transform: rotate(1turn);
-    }
-  }
+}

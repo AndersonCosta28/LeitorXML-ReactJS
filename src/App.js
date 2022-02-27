@@ -4,8 +4,7 @@ import "./styles.css";
 import Loading from './Loading'
 export default function App() {
 
-    const [Arquivo, setArquivo] = useState()
-    const [url, seturl] = useState('http://localhost:30/')
+    const [Arquivo, setArquivo] = useState()    
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
 
@@ -18,14 +17,20 @@ export default function App() {
             method: 'POST',
             body: data,
         }
-        fetch(url + 'uploads', config)
+        fetch('http://localhost:8080/uploads', config)
             .then(res => res.json())
-            .then(data => { console.log(data); navigate('/relatorio') })
-            .catch(e => e)
+            .then(data => { 
+                sessionStorage.setItem('DadosDoBackEnd', JSON.stringify(data))
+                navigate('/relatorio') 
+            })
+            .catch(e => {
+                alert(e)
+            })
             .finally(() => {
                 setLoading(false);
             });
     }
+    
     if (loading) {
         return Loading()
     }
