@@ -23,7 +23,6 @@ export default function Relatorio() {
         setTotal(Total)
         setSoma_CFOP(Soma_CFOP)
         setErros(total_de_erros)
-        console.log(total_de_erros)
     }, [])
 
     return (
