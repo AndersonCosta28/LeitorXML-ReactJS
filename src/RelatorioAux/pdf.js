@@ -4,8 +4,19 @@ import ParaBRL from "../util";
 
 export default function pdf() {
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
-  const [Soma_Dia, Todas_As_Notas, Total, Soma_CFOP, total_de_erros] = JSON.parse(sessionStorage.getItem("DadosDoBackEnd"));
-  const TDN = JSON.parse(sessionStorage.getItem("DadosDoBackEnd"))[1];
+  const [Soma_Dia, Todas_As_Notas, Total, Soma_CFOP, total_de_erros, Todos_Os_Eventos] = JSON.parse(sessionStorage.getItem("DadosDoBackEnd"));
+
+  const ArrayTodos_Os_Eventos = Todos_Os_Eventos.map(value => {
+    return [
+      { text: value.numero, fontSize: 9, margin: [0, 2, 0, 2] },
+      { text: value.modelo, fontSize: 9, margin: [0, 2, 0, 2] },
+      { text: value.serie, fontSize: 9, margin: [0, 2, 0, 2] },
+      { text: value.chave, fontSize: 9, margin: [0, 2, 0, 2] },
+      { text: value.descEvento, fontSize: 9, margin: [0, 2, 0, 2] },
+      { text: value.cStat, fontSize: 9, margin: [0, 2, 0, 2] },
+      { text: value.data, fontSize: 9, margin: [0, 2, 0, 2] },
+    ]
+  });
 
   const DevelopBy = { text: "Desenvolvido por Anderson Costa", link: 'https://github.com/Mert1s/', color: 'blue' };
 
@@ -100,6 +111,29 @@ export default function pdf() {
       layout: "headerLineOnly",
     },
   ];
+
+  const Todos_Os_Eventos_View = [
+    {text: 'Eventos', fontSize: 14, margin: [5, 15, 5, 15]},
+    {
+      table: {
+        headerRows: 1,
+        widths: ["auto", "auto", "auto", "auto", "auto", "auto", "auto"],
+        body: [
+          [
+            { text: "Numero", style: "tableHeader", fontSize: 9 },
+            { text: "Modelo", style: "tableHeader", fontSize: 9 },
+            { text: "Série", style: "tableHeader", fontSize: 9 },
+            { text: "Chave", style: "tableHeader", fontSize: 9 },
+            { text: "Descrição", style: "tableHeader", fontSize: 9 },
+            { text: "Status", style: "tableHeader", fontSize: 9 },
+            { text: "Data", style: "tableHeader", fontSize: 9 },            
+          ],
+          ...ArrayTodos_Os_Eventos,
+        ],
+      },
+      layout: "headerLineOnly",
+    },
+  ]
   const cabecalho = { text: "Relatório", alignment: 'center', fontSize: 30, margin: [5, 5, 5, 5] }
   const docDefinitions = {
     info: {
@@ -114,7 +148,7 @@ export default function pdf() {
     footer: function (currentPage, pageCount) {
       return { text: [`Página ${currentPage.toString()} de ${pageCount}`, ` - emitido em ${new Date(Date.now()).toLocaleString('pt-BR', { timeZone: "America/Sao_Paulo" })} - `, DevelopBy], fontSize: 8, margin: [15, 15, 15, 15] };
     },
-    content: [cabecalho, TodasAsNotas_VIEW, { unbreakable: true, stack: [SomaPorCFOP_VIEW, Total_VIEW] }],
+    content: [cabecalho, TodasAsNotas_VIEW, Todos_Os_Eventos_View, { unbreakable: true, stack: [SomaPorCFOP_VIEW, Total_VIEW] }],
   };
   pdfMake.createPdf(docDefinitions).open();
 }

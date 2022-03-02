@@ -3,8 +3,8 @@ import React from 'react';
 export default function Err(props) {
     return (
         <>
-            <h1 className="titulo">Lista de arquivos não validados</h1>
             <div className={props.estilo}>
+                <h3 className="titulo">Arquivos não validados</h3>
                 <table className="table table-striped">
                     <thead>
                         <tr>
@@ -13,14 +13,12 @@ export default function Err(props) {
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            props.erros.map(element =>
-                                <tr>
-                                    <td>{element.nome}</td>
-                                    <td>{element.motivo}</td>
-                                </tr>
-                            )
-                        }
+                        {props.erros.map(element =>
+                            <tr>
+                                <td>{element.nome}</td>
+                                <td>{element.motivo}</td>
+                            </tr>
+                        )}
                     </tbody>
                     <tfoot>
                     </tfoot>

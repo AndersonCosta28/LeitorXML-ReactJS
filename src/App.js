@@ -4,7 +4,7 @@ import "./styles.css";
 import Loading from './Loading'
 export default function App() {
 
-    const [Arquivo, setArquivo] = useState()    
+    const [Arquivo, setArquivo] = useState()
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
 
@@ -19,9 +19,11 @@ export default function App() {
         }
         fetch('https://leitorxml-backend.herokuapp.com/uploads', config)
             .then(res => res.json())
-            .then(data => { 
+            .then(data => {
+                if (data.erro)
+                    throw data.erro;
                 sessionStorage.setItem('DadosDoBackEnd', JSON.stringify(data))
-                navigate('/relatorio') 
+                navigate('/relatorio')
             })
             .catch(e => {
                 alert(e)
@@ -30,7 +32,7 @@ export default function App() {
                 setLoading(false);
             });
     }
-    
+
     if (loading) {
         return Loading()
     }

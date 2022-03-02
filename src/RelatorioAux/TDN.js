@@ -7,7 +7,7 @@ export default function TDN(props) {
             <table className="table table-striped">
                 <thead>
                     <tr>
-                        <th>Numero</th>
+                        <th>Nº</th>
                         <th>Modelo</th>
                         <th>Serie</th>
                         <th>Chave</th>
