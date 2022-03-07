@@ -2,9 +2,8 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import ParaBRL from "../util";
 
-export default function pdf() {
+export default function pdf(Todas_As_Notas, Total, Soma_CFOP, Todos_Os_Eventos) {
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
-  const [Soma_Dia, Todas_As_Notas, Total, Soma_CFOP, total_de_erros, Todos_Os_Eventos] = JSON.parse(sessionStorage.getItem("DadosDoBackEnd"));
 
   const ArrayTodos_Os_Eventos = Todos_Os_Eventos.map(value => {
     return [

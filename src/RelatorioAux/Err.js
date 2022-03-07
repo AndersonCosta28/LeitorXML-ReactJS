@@ -14,7 +14,7 @@ export default function Err(props) {
                     </thead>
                     <tbody>
                         {props.erros.map(element =>
-                            <tr>
+                            <tr key={element.nome}>
                                 <td>{element.nome}</td>
                                 <td>{element.motivo}</td>
                             </tr>

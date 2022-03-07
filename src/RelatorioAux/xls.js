@@ -1,52 +1,89 @@
-import { Grid, GridColumn, GridToolbar } from "@progress/kendo-react-grid";
-import { ExcelExport } from "@progress/kendo-react-excel-export";
-import React from 'react';
+import React from "react";
+import ReactExport from "react-export-excel";
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
+//https://stackoverflow.com/questions/61316889/how-to-export-data-to-excel-using-react-libraries
 
-export default function App() {
-    const _export = React.useRef(null);
-
-    const excelExport = () => {
-        if (_export.current !== null) {
-            _export.current.save();
-        }
+export default function App({ route, navigation }) {
+    const data = route.params.Todas_As_Notas;
+    const camelCase = (str) => {
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
     };
-    const Todas_As_Notas = JSON.parse(sessionStorage.getItem('DadosDoBackEnd'))[1]
+
+    const filterColumns = (data) => {
+        // Get column names
+        const columns = Object.keys(data[0]);
+
+        // Remove by key (firstname)
+        const filterColsByKey = columns.filter(c => !['desconto', 'data_recebimento', 'produto', 'emitente'].includes(c));
+        // OR use the below line instead of the above if you want to filter by index
+        // columns.shift()
+
+        return filterColsByKey // OR return columns
+    };
+
     return (
-        <ExcelExport data={Todas_As_Notas} ref={_export}>
-            <Grid
-                data={Todas_As_Notas}
-                style={{
-                    height: "420px",
-                }}
-            >
-                <GridToolbar>
-                    <button
-                        title="Export Excel"
-                        className="k-button k-button-md k-rounded-md k-button-solid k-button-solid-primary"
-                        onClick={excelExport}
-                    >
-                        Exportar para excel
-                    </button>
-                </GridToolbar>
-                <GridColumn field="numero" title="Numero"/>
-                <GridColumn field="serie" title="Série"/>
-                <GridColumn field="modelo" title="Modelo" />
-                <GridColumn field="chave" title="Chave" />
-                <GridColumn field="data" title="Data" />
-                <GridColumn field="status" title="Status" />
-                <GridColumn field="valor" title="Valor Total" />
-                <GridColumn field="ipi" title="Valor IPI" />
-                <GridColumn field="vOutro" title="Valor Outros" />
-                <GridColumn field="vFrete" title="Valor Frete" />
-                <GridColumn field="vBCST" title="Base de calculo ICMS substituído" />
-                <GridColumn field="vST" title="Valor ICMS Substituído" />
-                <GridColumn field="vBC" title="Base de calculo ICMS" />
-                <GridColumn field="vICMS" title="Valor ICMS" />                
-                <GridColumn field="vPIS" title="Valor PIS" />
-                <GridColumn field="vCOFINS" title="Valor COFINS" />
-                <GridColumn field="vTotTrib" title="Valor Total aproximado dos Tributos" />
-            </Grid>
-        </ExcelExport>
+        <div className="App">
+            <h1 className="titulo"><a href="/">Página inicial</a></h1>
+            <ExcelFile filename="Relatorio">
+                <ExcelSheet data={data} name="Relatorio">
+                    {
+                        filterColumns(data).map((col) => {
+                            return <ExcelColumn label={camelCase(col)} value={col} key='numero' />
+                        })
+                    }
+                </ExcelSheet>
+            </ExcelFile>
+            <table id="table-to-xls">
+                <thead>
+                    <tr key="numero">
+                        <th>numero</th>
+                        <th>serie</th>
+                        <th>modelo</th>
+                        <th>chave</th>
+                        <th>data</th>
+                        <th>status</th>
+                        <th>valor</th>
+                        <th>ipi</th>
+                        <th>vOutro</th>
+                        <th>vFrete</th>
+                        <th>vBCST</th>
+                        <th>vST</th>
+                        <th>vBC</th>
+                        <th>vICMS</th>
+                        <th>vPIS</th>
+                        <th>vCOFINS</th>
+                        <th>vTotTrib</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {data.map(item => {
+                        return (
+                            <tr key={item.numero}>
+                                <td>{item.numero}</td>
+                                <td>{item.serie}</td>
+                                <td>{item.modelo}</td>
+                                <td>{item.chave}</td>
+                                <td>{item.data}</td>
+                                <td>{item.status}</td>
+                                <td>{item.valor}</td>
+                                <td>{item.ipi}</td>
+                                <td>{item.vOutro}</td>
+                                <td>{item.vFrete}</td>
+                                <td>{item.vBCST}</td>
+                                <td>{item.vST}</td>
+                                <td>{item.vBC}</td>
+                                <td>{item.vICMS}</td>
+                                <td>{item.vPIS}</td>
+                                <td>{item.vCOFINS}</td>
+                                <td>{item.vTotTrib}</td>
+                            </tr>
+                        );
+                    })}
+                </tbody >
+            </table>
+        </div >
     );
-};
+}

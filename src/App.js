@@ -1,66 +1,22 @@
-import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
-import "./styles.css";
-import Loading from './Loading'
-export default function App() {
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Tela_Envio from './Tela_Envio';
+import Relatorio from './Relatorio';
+import xls from './RelatorioAux/Xls'
 
-    const [Arquivo, setArquivo] = useState()
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate()
+const Stack = createNativeStackNavigator();
 
-    function SubMit(event) {
-        setLoading(true);
-        event.preventDefault();
-        const data = new FormData();
-        data.append("file", Arquivo);
-        const config = {
-            method: 'POST',
-            body: data,
-        }
-        fetch('https://leitorxml-backend.herokuapp.com/uploads', config)
-            .then(res => res.json())
-            .then(data => {
-                if (data.erro)
-                    throw data.erro;
-                sessionStorage.setItem('DadosDoBackEnd', JSON.stringify(data))
-                navigate('/relatorio')
-            })
-            .catch(e => {
-                alert(e)
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    }
-
-    if (loading) {
-        return Loading()
-    }
+function App() {
     return (
-        <>
-            <div id="form">
-                <h1>Formulário de envio</h1>
-                <form onSubmit={SubMit}>
-                    <input type="file" name="file" id="" accept=".zip" onChange={(value) => setArquivo(value.target.files[0])} />
-                    <input type="submit" value="Enviar" id="button" />
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName='Tela_Envio' screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="Tela_Envio" component={Tela_Envio} options={{title: 'Tela de envio'}} />
+                <Stack.Screen name="Relatorio" component={Relatorio} />
+                <Stack.Screen name="xls" component={xls} options= {{title: 'Download XLS'}}/>
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
+}
 
-                </form>
-            </div>
-            <div className='tela'>
-                <Recomendacoes></Recomendacoes>
-            </div>
-        </>
-    )
-}
-function Recomendacoes() {
-    return (
-        <div>
-            <h1>Recomendações</h1>
-            <ul>
-                <li>Escolher arquivo .zip, extensão .rar e demais não são compatíveis.</li>
-                <li>Os arquivos XML devem estar na raiz do arquivo compactado, não havendo subpastas.</li>
-                <li>Aproveite! ☺</li>
-            </ul>
-        </div>
-    )
-}
+export default App;

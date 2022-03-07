@@ -20,7 +20,7 @@ export default function Evento(props) {
                     </thead>
                     <tbody>
                         {props.Eventos.map(element =>
-                            <tr>
+                            <tr key={element.numero}>
                                 <td>{element.numero}</td>
                                 <td>{element.modelo}</td>
                                 <td>{element.serie}</td>
