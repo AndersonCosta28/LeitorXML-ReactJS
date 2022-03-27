@@ -16,21 +16,21 @@ export default function App({ navigation }) {
                 'Content-Type': 'application/json'
             },
         }
-        fetch('http://localhost:3000/auth/login', config)
+        fetch('http://localhost:8080/auth/login', config)
             .then(res => res.json())
             .then(data => {
                 console.log(data)
-                if (data.statusCode == 200) {
+                if (data.access_token) {
                     sessionStorage.setItem('token', 'Bearer ' + data.access_token)
                     navigation.navigate('Tela_Envio');
                 }
-                else if (data.statusCode == 403)
-                    throw "Usuário inativo";
+                else if (data.statusCode === 403)
+                    throw new Error("Usuário inativo");
                 else
-                    throw data.message
-
+                    throw new Error(data.message)
             })
             .catch(e => {
+                console.log(e)
                 alert(e)
             })
             .finally(() => {

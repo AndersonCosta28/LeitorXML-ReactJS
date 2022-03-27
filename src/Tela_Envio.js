@@ -18,12 +18,12 @@ export default function Tela_Envio({ navigation }) {
                 'Authorization': sessionStorage.getItem('token')
             }
         }
-        fetch('http://localhost:3000/upload', config)
+        fetch('http://localhost:8080/upload', config)
             .then(res => res.json())
             .then(data => {
-                if(data.statusCode == 200)
+                if(data.statusCode === 200)
                     navigation.navigate('Relatorio', { DadosDoBackEnd: data });
-                else if (data.statusCode == 401)
+                else if (data.statusCode === 401)
                     throw "Não autorizado";
                 else
                     throw data.message
