@@ -6,8 +6,8 @@ const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 //https://stackoverflow.com/questions/61316889/how-to-export-data-to-excel-using-react-libraries
 
-export default function App({ route, navigation }) {
-    const data = route.params.Todas_As_Notas;
+export default function xls(Dados) {
+    const data = Dados
     const camelCase = (str) => {
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     };
@@ -26,8 +26,7 @@ export default function App({ route, navigation }) {
 
     return (
         <div className="App">
-            <h1 className="titulo"><a href="/">Página inicial</a></h1>
-            <ExcelFile filename="Relatorio">
+            <ExcelFile filename="Relatorio" element={<button>Baixar em EXCEL</button>}>
                 <ExcelSheet data={data} name="Relatorio">
                     {
                         filterColumns(data).map((col) => {
@@ -36,7 +35,7 @@ export default function App({ route, navigation }) {
                     }
                 </ExcelSheet>
             </ExcelFile>
-            <table id="table-to-xls">
+            <table id="table-to-xls" style={{ display: 'none' }}>
                 <thead>
                     <tr key="numero">
                         <th>numero</th>

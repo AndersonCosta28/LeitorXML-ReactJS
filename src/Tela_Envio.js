@@ -1,34 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import "./styles.css";
 import Loading from './Loading'
+import Relatorio from './Relatorio.js'
+
+
 export default function Tela_Envio({ navigation }) {
 
     const [Arquivo, setArquivo] = useState();
     const [loading, setLoading] = useState(false);
+    const [Dados, SetDados] = useState([])
+    const [Rel, SetRel] = useState(false);
 
     function Submit(event) {
         setLoading(true);
+        SetRel(false);
         event.preventDefault();
         const data = new FormData();
         data.append("file", Arquivo);
         const config = {
             method: 'POST',
             body: data,
-            headers:{
+            headers: {
                 'Authorization': sessionStorage.getItem('token')
             }
         }
         fetch('http://localhost:8080/upload', config)
             .then(res => res.json())
             .then(data => {
-                if(data.statusCode === 200)
-                    navigation.navigate('Relatorio', { DadosDoBackEnd: data });
-                else if (data.statusCode === 401)
-                    throw "Não autorizado";
-                else
-                    throw data.message
-
-                
+                if (data.statusCode !== undefined || null)
+                    throw new Error(`${data.statusCode} - ${data.message}`)
+                SetDados(data)
+                SetRel(true)
             })
             .catch(e => {
                 alert(e)
@@ -36,10 +38,6 @@ export default function Tela_Envio({ navigation }) {
             .finally(() => {
                 setLoading(false);
             });
-    }
-    useEffect(() => document.title = 'teste', [])
-    if (loading) {
-        return Loading()
     }
 
     return (
@@ -52,12 +50,12 @@ export default function Tela_Envio({ navigation }) {
                 </form>
             </div>
             <div className='tela'>
-                <Recomendacoes></Recomendacoes>
+                {loading && !Rel ? Loading() : !Rel ? Recomendacoes(Dados) : Relatorio(Dados, navigation)}
             </div>
         </>
-    )
+    )    
 }
-function Recomendacoes() {
+function Recomendacoes(Dados) {
     return (
         <div>
             <h1>Recomendações</h1>

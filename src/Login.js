@@ -54,7 +54,7 @@ export default function App({ navigation }) {
                     <input type='password' id='password' name='username' className='i1' onChange={(Event) => setSenha(Event.target.value)}></input>
                 </div>
                 <div className='d2'>
-                    <a href='#'>Esqueci Senha</a><input type='submit' value='Entrar' className='i1' onClick={() => Submit()}></input>
+                    <a href='/'>Esqueci Senha</a><input type='submit' value='Entrar' className='i1' onClick={() => Submit()}></input>
                 </div>
             </form >
         </div >
