@@ -46,7 +46,7 @@ export default function Tela_Envio({ navigation }) {
                 <h1>Formulário de envio</h1>
                 <form onSubmit={Submit}>
                     <input type="file" name="file" id="" accept=".zip" onChange={(value) => setArquivo(value.target.files[0])} />
-                    <input type="submit" value="Enviar" id="button" />
+                    <input type="submit" value="Enviar" id="button" style={{marginLeft: '1%'}}/>
                 </form>
             </div>
             <div className='tela'>

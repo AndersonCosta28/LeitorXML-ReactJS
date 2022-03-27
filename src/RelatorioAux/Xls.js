@@ -6,8 +6,8 @@ const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 //https://stackoverflow.com/questions/61316889/how-to-export-data-to-excel-using-react-libraries
 
-export default function xls(Dados) {
-    const data = Dados
+export default function xls(props) {
+    const data = props.Dados
     const camelCase = (str) => {
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     };
