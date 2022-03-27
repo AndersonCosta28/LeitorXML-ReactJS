@@ -3,7 +3,7 @@ import "./styles.css";
 import Loading from './Loading'
 export default function Tela_Envio({ navigation }) {
 
-    const [Arquivo, setArquivo] = useState()
+    const [Arquivo, setArquivo] = useState();
     const [loading, setLoading] = useState(false);
 
     function Submit(event) {
@@ -14,13 +14,21 @@ export default function Tela_Envio({ navigation }) {
         const config = {
             method: 'POST',
             body: data,
+            headers:{
+                'Authorization': sessionStorage.getItem('token')
+            }
         }
-        fetch('https://leitorxml-backend.herokuapp.com/uploads', config)
+        fetch('http://localhost:3000/upload', config)
             .then(res => res.json())
             .then(data => {
-                if (data.erro)
-                    throw data.erro;
-                navigation.navigate('Relatorio', { DadosDoBackEnd: data });
+                if(data.statusCode == 200)
+                    navigation.navigate('Relatorio', { DadosDoBackEnd: data });
+                else if (data.statusCode == 401)
+                    throw "Não autorizado";
+                else
+                    throw data.message
+
+                
             })
             .catch(e => {
                 alert(e)
@@ -29,11 +37,11 @@ export default function Tela_Envio({ navigation }) {
                 setLoading(false);
             });
     }
-    useEffect(()=> document.title = 'teste', [])
+    useEffect(() => document.title = 'teste', [])
     if (loading) {
         return Loading()
     }
-    
+
     return (
         <>
             <div id="form">
