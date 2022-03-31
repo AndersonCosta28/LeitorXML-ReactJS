@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { createContext, useState } from 'react';
 import "./styles.css";
-import Loading from './Loading'
-import Relatorio from './Relatorio.js'
+import Loading from './Loading/Loading.js'
+import Relatorio from './Relatorio/Relatorio.js'
 
-
-export default function Tela_Envio({ navigation }) {
+export const Contexto =  createContext()  
+export function Tela_Envio() {      
 
     const [Arquivo, setArquivo] = useState();
     const [loading, setLoading] = useState(false);
     const [Dados, SetDados] = useState([])
     const [Rel, SetRel] = useState(false);
+
+    let teste;
 
     function Submit(event) {
         setLoading(true);
@@ -30,6 +32,7 @@ export default function Tela_Envio({ navigation }) {
                 if (data.statusCode !== undefined || null)
                     throw new Error(`${data.statusCode} - ${data.message}`)
                 SetDados(data)
+                teste = data;
                 SetRel(true)
             })
             .catch(e => {
@@ -50,12 +53,12 @@ export default function Tela_Envio({ navigation }) {
                 </form>
             </div>
             <div className='tela'>
-                {loading && !Rel ? Loading() : !Rel ? Recomendacoes(Dados) : Relatorio(Dados, navigation)}
+                {loading && !Rel ? Loading() : !Rel ? Recomendacoes() : Relatorio(Dados)}
             </div>
         </>
     )    
 }
-function Recomendacoes(Dados) {
+function Recomendacoes() {
     return (
         <div>
             <h1>Recomendações</h1>
