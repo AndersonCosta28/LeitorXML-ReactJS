@@ -11,8 +11,6 @@ export function Tela_Envio() {
     const [Dados, SetDados] = useState([])
     const [Rel, SetRel] = useState(false);
 
-    let teste;
-
     function Submit(event) {
         setLoading(true);
         SetRel(false);
@@ -32,7 +30,6 @@ export function Tela_Envio() {
                 if (data.statusCode !== undefined || null)
                     throw new Error(`${data.statusCode} - ${data.message}`)
                 SetDados(data)
-                teste = data;
                 SetRel(true)
             })
             .catch(e => {

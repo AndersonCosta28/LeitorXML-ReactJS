@@ -1,11 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import SD from './RelatorioAux/SD'
 import Err from './RelatorioAux/Err';
 import Tot from './RelatorioAux/Tot';
 import SMCFOP from './RelatorioAux/SMCFOP';
 import pdf from './RelatorioAux/pdf';
 import Xls from './RelatorioAux/Xls'
-import { Contexto } from '../Tela_Envio';
 
 export default function Relatorio(Dados) {
     return (

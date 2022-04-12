@@ -1,36 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import "./loginstyle.css";
 import Loading from '../Loading/Loading'
-import { createCipheriv, randomBytes, createDecipheriv, scryptSync } from 'crypto';
-import { promisify } from 'util';
 
 export default function App({ navigation }) {
     const [loading, setLoading] = useState(false);
     const [Usuario, setUsuario] = useState('');
     const [Senha, setSenha] = useState('')
 
-    function enc(senha = 'teste') {
-        try {
-            const key = '1b4de2c5fd632cd8fc6bb176bb3f4bc3'
-
-            const cipher = createCipheriv('aes-256-ctr', key, Buffer.from('b4de776a4a8e286e7cd14fb673cbac3f', 'hex'));
-
-            const textToEncrypt = senha;
-            const encryptedText = Buffer.concat([
-                cipher.update(textToEncrypt),
-                cipher.final(),]);
-
-            return encryptedText;
-        } catch (error) {
-            console.error(error)
-        }
-
-    }
 
     function Submit() {
-        const senha = enc(Senha).toString('hex')
         setLoading(true);
-        const data = { usuario: Usuario, senha }
+        const data = { usuario: Usuario, senha: Senha }
         const config = {
             method: 'POST',
             body: JSON.stringify(data),
