@@ -18,7 +18,7 @@ export default function App({ navigation }) {
                 'Content-Type': 'application/json'
             },
         }
-        fetch('http://localhost:8080/auth/login', config)
+        fetch('http://leitorxml-backend.herokuapp.com/auth/login', config)
             .then(res => res.json())
             .then(data => {
                 if (data.access_token) {
