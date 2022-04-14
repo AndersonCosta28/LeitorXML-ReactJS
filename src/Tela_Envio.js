@@ -24,11 +24,12 @@ export function Tela_Envio() {
                 'Authorization': sessionStorage.getItem('token')
             }
         }
-        fetch('http://localhost:8080/upload', config)
+        fetch('https://leitorxml-backend.herokuapp.com/upload', config)
             .then(res => res.json())
             .then(data => {
                 if (data.statusCode !== undefined || null)
                     throw new Error(`${data.statusCode} - ${data.message}`)
+                console.log(data)
                 SetDados(data)
                 SetRel(true)
             })
