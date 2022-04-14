@@ -1,9 +1,9 @@
 import React from "react";
-import "./styles.css";
+import "./loadingstyles.css";
 export default function Loading() { 
   return (
-    <div className="tela">
-      <div className="cloader"></div>{" "}
+    <div className="centralizar">
+      <div className="cloader"></div>
     </div>
   );
 }

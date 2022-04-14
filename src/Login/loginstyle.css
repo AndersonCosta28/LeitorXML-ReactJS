@@ -2,10 +2,9 @@
     font-family: 'Verdana';
 }
 .telaLogin {
-    align-items: center;
     display: flex;
+    align-items: center;
     justify-content: center;
-    min-height: 75vh;
   }
 .d1{
     margin: 20px

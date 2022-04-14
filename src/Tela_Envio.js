@@ -2,6 +2,7 @@ import React, { createContext, useState } from 'react';
 import "./styles.css";
 import Loading from './Loading/Loading.js'
 import Relatorio from './Relatorio/Relatorio.js'
+import { URL_SERVIDOR } from './util';
 
 export const Contexto =  createContext()  
 export function Tela_Envio() {      
@@ -24,7 +25,7 @@ export function Tela_Envio() {
                 'Authorization': sessionStorage.getItem('token')
             }
         }
-        fetch('https://leitorxml-backend.herokuapp.com/upload', config)
+        fetch(URL_SERVIDOR + '/upload', config)
             .then(res => res.json())
             .then(data => {
                 if (data.statusCode !== undefined || null)
@@ -49,7 +50,7 @@ export function Tela_Envio() {
                     <input type="submit" value="Enviar" id="button" style={{marginLeft: '1%'}}/>
                 </form>
             </div>
-            <div className='tela'>
+            <div>
                 {loading && !Rel ? Loading() : !Rel ? Recomendacoes() : Relatorio(Dados)}
             </div>
         </>
@@ -57,7 +58,7 @@ export function Tela_Envio() {
 }
 function Recomendacoes() {
     return (
-        <div>
+        <div className='centralizarRecomendacoes'>
             <h1>Recomendações</h1>
             <ul>
                 <li>Escolher arquivo .zip, extensão .rar e demais não são compatíveis.</li>

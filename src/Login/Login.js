@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import "./loginstyle.css";
 import Loading from '../Loading/Loading'
+import { URL_SERVIDOR } from '../util';
 
 export default function App({ navigation }) {
     const [loading, setLoading] = useState(false);
@@ -18,7 +19,7 @@ export default function App({ navigation }) {
                 'Content-Type': 'application/json'
             },
         }
-        fetch('http://localhost:8080/auth/login', config)
+        fetch(URL_SERVIDOR +'/auth/login', config)
             .then(res => res.json())
             .then(data => {
                 if (data.access_token) {
@@ -43,7 +44,7 @@ export default function App({ navigation }) {
     }
 
     return (
-        <div className='telaLogin'>
+        <div className='telaLogin centralizar'>
             <form>
                 <h1 style={{ textAlign: 'center' }}>Seja bem-vindo</h1>
                 <div className='d1'>
