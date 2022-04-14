@@ -29,7 +29,6 @@ export function Tela_Envio() {
             .then(data => {
                 if (data.statusCode !== undefined || null)
                     throw new Error(`${data.statusCode} - ${data.message}`)
-                console.log(data)
                 SetDados(data)
                 SetRel(true)
             })
