@@ -4,4 +4,4 @@ export const ParaBRL = new Intl.NumberFormat('pt-BR', { //Formatar para Real R$
     minimumFractionDigits: 2,
 }).format;
 
-export const URL_SERVIDOR = process.env.REACT_APP_PRODUCAO === 'true' ? 'http://leitorxml-backend.herokuapp.com' : 'http://localhost:8080';
+export const URL_SERVIDOR = process.env.REACT_APP_PRODUCAO === 'true' ? 'https://leitorxml-backend.herokuapp.com' : 'http://localhost:8080';
