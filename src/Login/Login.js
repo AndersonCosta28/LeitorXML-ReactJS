@@ -4,6 +4,8 @@ import Loading from '../Loading/Loading'
 import { URL_SERVIDOR } from '../util';
 
 export default function App({ navigation }) {
+    require('dotenv').config()
+
     const [loading, setLoading] = useState(false);
     const [Usuario, setUsuario] = useState('');
     const [Senha, setSenha] = useState('')
