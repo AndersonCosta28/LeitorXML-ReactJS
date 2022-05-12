@@ -4,8 +4,8 @@ import Loading from './Loading/Loading.js'
 import Relatorio from './Relatorio/Relatorio.js'
 import { URL_SERVIDOR } from './util';
 
-export const Contexto =  createContext()  
-export function Tela_Envio() {      
+export const Contexto = createContext()
+export function Tela_Envio() {
 
     const [Arquivo, setArquivo] = useState();
     const [loading, setLoading] = useState(false);
@@ -41,20 +41,33 @@ export function Tela_Envio() {
             });
     }
 
+    function RetornaHoraFimDaSessao(){
+        const data = new Date();
+        return new Date(data.setMinutes(data.getMinutes() + 10)).toLocaleTimeString()
+    }
+
     return (
         <>
             <div id="form">
-                <h1>Formulário de envio</h1>
+                <div className='row'>
+                    <div className='col'>
+                        <h1>Formulário de envio</h1>
+
+                    </div>
+                    <div className='col'>
+                        <h4>Fim da sessão em: {RetornaHoraFimDaSessao()}</h4>
+                    </div>
+                </div>
                 <form onSubmit={Submit}>
                     <input type="file" name="file" id="" accept=".zip" onChange={(value) => setArquivo(value.target.files[0])} />
-                    <input type="submit" value="Enviar" id="button" style={{marginLeft: '1%'}}/>
+                    <input type="submit" value="Enviar" id="button" disabled={!!loading} style={{ marginLeft: '1%' }} />
                 </form>
             </div>
             <div>
                 {loading && !Rel ? Loading() : !Rel ? Recomendacoes() : Relatorio(Dados)}
             </div>
         </>
-    )    
+    )
 }
 function Recomendacoes() {
     return (

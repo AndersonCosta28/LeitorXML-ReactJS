@@ -1,6 +1,6 @@
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-import {ParaBRL} from "../../util";
+import { ParaBRL } from "../../util";
 
 export default function pdf(Todas_As_Notas, Total, Soma_CFOP, Todos_Os_Eventos) {
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -26,7 +26,7 @@ export default function pdf(Todas_As_Notas, Total, Soma_CFOP, Todos_Os_Eventos) 
       { text: `${value.serie}`, fontSize: 9, margin: [0, 2, 0, 2] },
       { text: `${value.chave}`, fontSize: 9, margin: [0, 2, 0, 2] },
       { text: `${value.status}`, fontSize: 9, margin: [0, 2, 0, 2] },
-      { text: `${ParaBRL(value.valor)}`, fontSize: 9, margin: [0, 2, 0, 2] },
+      { text: `${ParaBRL(value.valor_total)}`, fontSize: 9, margin: [0, 2, 0, 2] },
       { text: `${value.data}`, fontSize: 9, margin: [0, 2, 0, 2] },
     ];
   });
@@ -39,13 +39,15 @@ export default function pdf(Todas_As_Notas, Total, Soma_CFOP, Todos_Os_Eventos) 
   });
   const ArrayTotal = [[
     { text: `${Total.quantidade}`, fontSize: 9, margin: [0, 2, 0, 2] },
-    { text: `${ParaBRL(Total.total)}`, fontSize: 9, margin: [0, 2, 0, 2] },
+    { text: `${ParaBRL(Total.valor_dos_produtos)}`, fontSize: 9, margin: [0, 2, 0, 2] },
     { text: `${ParaBRL(Total.icms)}`, fontSize: 9, margin: [0, 2, 0, 2] },
     { text: `${ParaBRL(Total.outro)}`, fontSize: 9, margin: [0, 2, 0, 2] },
     { text: `${ParaBRL(Total.frete)}`, fontSize: 9, margin: [0, 2, 0, 2] },
     { text: `${ParaBRL(Total.substituicao)}`, fontSize: 9, margin: [0, 2, 0, 2], },
     { text: `${ParaBRL(Total.ipi)}`, fontSize: 9, margin: [0, 2, 0, 2], },
+    { text: `${ParaBRL(Total.ipidevolvido)}`, fontSize: 9, margin: [0, 2, 0, 2], },
     { text: `${ParaBRL(Total.desconto)}`, fontSize: 9, margin: [0, 2, 0, 2] },
+    { text: `${ParaBRL(Total.total)}`, fontSize: 9, margin: [0, 2, 0, 2] }
   ]];
   const TodasAsNotas_VIEW = [
     { text: "Todas as Notas", fontSize: 14, margin: [5, 5, 5, 5] },
@@ -70,7 +72,8 @@ export default function pdf(Todas_As_Notas, Total, Soma_CFOP, Todos_Os_Eventos) 
     },
   ];
   const SomaPorCFOP_VIEW = [
-    { text: "SOMA POR CFOP", fontSize: 14, margin: [5, 5, 5, 15] },
+    { text: "SOMA POR CFOP", fontSize: 14, margin: [5, 15, 5, 0] },
+    { text: "OBS.: Os totais por CFOP não é considerado o desconto no calculo", fontSize: 8, italics: true, margin: [0, 0, 0, 15] },
     {
       table: {
         headerRows: 1,
@@ -88,21 +91,23 @@ export default function pdf(Todas_As_Notas, Total, Soma_CFOP, Todos_Os_Eventos) 
     },
   ];
   const Total_VIEW = [
-    { text: "Totalizadores", fontSize: 14, margin: [5, 15, 5, 15] },
+    { text: "Totalizadores", fontSize: 14, margin: [0, 15, 0, 15] },
     {
       table: {
         headerRows: 1,
-        widths: ["auto", "auto", "auto", "auto", "auto", "auto", "auto", "auto"],
+        widths: ["auto", "auto", "auto", "auto", "auto", "auto", "auto", "auto", "auto", "auto"],
         body: [
           [
-            { text: "Quantidade", style: "tableHeader", fontSize: 9 },
-            { text: "Total", style: "tableHeader", fontSize: 9 },
+            { text: "Qntd", style: "tableHeader", fontSize: 9 },
+            { text: "Valor dos produtos", style: "tableHeader", fontSize: 9 },
             { text: "ICMS", style: "tableHeader", fontSize: 9 },
             { text: "Outro", style: "tableHeader", fontSize: 9 },
             { text: "Frete", style: "tableHeader", fontSize: 9 },
             { text: "Substituicao", style: "tableHeader", fontSize: 9 },
             { text: "IPI", style: "tableHeader", fontSize: 9 },
+            { text: "IPI Devolvido", style: "tableHeader", fontSize: 9 },
             { text: "Desconto", style: "tableHeader", fontSize: 9 },
+            { text: "Total", style: "tableHeader", fontSize: 9 },
           ],
           ...ArrayTotal,
         ],
@@ -112,7 +117,8 @@ export default function pdf(Todas_As_Notas, Total, Soma_CFOP, Todos_Os_Eventos) 
   ];
 
   const Todos_Os_Eventos_View = [
-    {text: 'Eventos', fontSize: 14, margin: [5, 15, 5, 15]},
+    // {canvas: [{ type: 'line', x1: 0, y1: 5, x2: 595-2*40, y2: 5, lineWidth: 3 }]},
+    { text: 'Eventos', fontSize: 14, margin: [5, 15, 5, 15] },
     {
       table: {
         headerRows: 1,
@@ -125,7 +131,7 @@ export default function pdf(Todas_As_Notas, Total, Soma_CFOP, Todos_Os_Eventos) 
             { text: "Chave", style: "tableHeader", fontSize: 9 },
             { text: "Descrição", style: "tableHeader", fontSize: 9 },
             { text: "Status", style: "tableHeader", fontSize: 9 },
-            { text: "Data", style: "tableHeader", fontSize: 9 },            
+            { text: "Data", style: "tableHeader", fontSize: 9 },
           ],
           ...ArrayTodos_Os_Eventos,
         ],
@@ -133,7 +139,7 @@ export default function pdf(Todas_As_Notas, Total, Soma_CFOP, Todos_Os_Eventos) 
       layout: "headerLineOnly",
     },
   ]
-  const cabecalho = { text: "Relatório", alignment: 'center', fontSize: 30, margin: [5, 5, 5, 5] }
+  const cabecalho = { text: "Relatório", alignment: 'center', fontSize: 30, margin: [0, 5, 0, 5] }
   const docDefinitions = {
     info: {
       title: 'Relatório de XML',

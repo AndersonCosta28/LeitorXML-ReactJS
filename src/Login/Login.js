@@ -26,6 +26,7 @@ export default function App({ navigation }) {
             .then(data => {
                 if (data.access_token) {
                     sessionStorage.setItem('token', 'Bearer ' + data.access_token)
+                    console.log(data)
                     navigation.navigate('Tela_Envio');
                 }
                 else if (data.statusCode === 403)
