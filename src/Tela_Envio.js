@@ -2,7 +2,7 @@ import React, { createContext, useState } from 'react';
 import "./styles.css";
 import Loading from './Loading/Loading.js'
 import Relatorio from './Relatorio/Relatorio.js'
-import { URL_SERVIDOR } from './util';
+import { FimSessao, URL_SERVIDOR } from './util';
 
 export const Contexto = createContext()
 export function Tela_Envio() {
@@ -41,11 +41,6 @@ export function Tela_Envio() {
             });
     }
 
-    function RetornaHoraFimDaSessao(){
-        const data = new Date();
-        return new Date(data.setMinutes(data.getMinutes() + 10)).toLocaleTimeString()
-    }
-
     return (
         <>
             <div id="form">
@@ -55,7 +50,7 @@ export function Tela_Envio() {
 
                     </div>
                     <div className='col'>
-                        <h4>Fim da sessão em: {RetornaHoraFimDaSessao()}</h4>
+                        <h4>Fim da sessão em: {FimSessao}</h4>
                     </div>
                 </div>
                 <form onSubmit={Submit}>

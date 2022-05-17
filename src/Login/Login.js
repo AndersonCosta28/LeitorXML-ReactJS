@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "./loginstyle.css";
 import Loading from '../Loading/Loading'
-import { URL_SERVIDOR } from '../util';
+import { URL_SERVIDOR, SetHoraFimDaSessao } from '../util';
 
 export default function App({ navigation }) {
     require('dotenv').config()
@@ -21,12 +21,13 @@ export default function App({ navigation }) {
                 'Content-Type': 'application/json'
             },
         }
-        fetch(URL_SERVIDOR +'/auth/login', config)
+        fetch(URL_SERVIDOR + '/auth/login', config)
             .then(res => res.json())
             .then(data => {
                 if (data.access_token) {
                     sessionStorage.setItem('token', 'Bearer ' + data.access_token)
-                    console.log(data)
+                    //console.log(data)
+                    SetHoraFimDaSessao()
                     navigation.navigate('Tela_Envio');
                 }
                 else if (data.statusCode === 403)
