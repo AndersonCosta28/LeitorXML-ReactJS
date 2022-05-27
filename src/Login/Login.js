@@ -49,23 +49,23 @@ export default function Login({ navigation }) {
     }
     return (
         <div className='bodylogin'>
-            <div class="wrapper fadeInDown">
+            <div className="wrapper fadeInDown">
                 <div id="formContent">
-                    <h2 class="active"> Entrar </h2>
-                    {/* <h2 class="inactive underlineHover">Sign Up </h2> */}
+                    <h2 className="active"> Entrar </h2>
+                    {/* <h2 className="inactive underlineHover">Sign Up </h2> */}
 
-                    {/* <div class="fadeIn first">
+                    {/* <div className="fadeIn first">
                         <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />
                     </div> */}
 
                     <form>
-                        <input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuário"  onChange={(Event) => setUsuario(Event.target.value)} />
-                        <input type="password" id="password" class="fadeIn third" name="login" placeholder="Senha" onChange={(Event) => setSenha(Event.target.value)} />
-                        <input type="submit" class="fadeIn fourth" value="Log In" onClick={() => Submit()}/>
+                        <input type="text" id="login" className="fadeIn second" name="login" placeholder="Usuário"  onChange={(Event) => setUsuario(Event.target.value)} />
+                        <input type="password" id="password" className="fadeIn third" name="login" placeholder="Senha" onChange={(Event) => setSenha(Event.target.value)} />
+                        <input type="submit" className="fadeIn fourth" value="Log In" onClick={() => Submit()}/>
                     </form>
 
                     {/* <div id="formFooter">
-                        <a class="underlineHover" href="#">Esqueceu a senha?</a>
+                        <a className="underlineHover" href="#">Esqueceu a senha?</a>
                     </div> */}
 
                 </div>

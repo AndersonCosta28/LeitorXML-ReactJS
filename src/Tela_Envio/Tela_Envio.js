@@ -12,13 +12,9 @@ export function Tela_Envio() {
     const [loading, setLoading] = useState(false);
     const [Dados, SetDados] = useState([])
     const [Rel, SetRel] = useState(false);
-    
+
     function Submit(event) {
-        setLoading(true);
-        SetRel(false);
-        event.preventDefault();
         const data = new FormData();
-        data.append("file", Arquivo);
         const config = {
             method: 'POST',
             body: data,
@@ -26,6 +22,20 @@ export function Tela_Envio() {
                 'Authorization': sessionStorage.getItem('token')
             }
         }
+        
+        event.preventDefault();
+
+        if (!Arquivo) {
+            alert('Antes de enviar, selecione um arquivo.');
+            return;
+        }
+
+        setLoading(true);
+        SetRel(false);
+        data.append("file", Arquivo);
+
+        
+
         fetch(URL_SERVIDOR + '/upload', config)
             .then(res => res.json())
             .then(data => {
@@ -54,7 +64,7 @@ export function Tela_Envio() {
                     </div>
                 </div>
                 <form onSubmit={Submit}>
-                    <input type="file" name="file" aria-label='File browser example'  accept=".zip" onChange={(value) => setArquivo(value.target.files[0])} />
+                    <input type="file" name="file" aria-label='File browser example' accept=".zip" onChange={(value) => setArquivo(value.target.files[0])} />
                     <button className="button botaosubmit" disabled={!!loading}>Enviar</button>
                 </form>
             </div>
