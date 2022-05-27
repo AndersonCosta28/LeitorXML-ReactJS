@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import {Tela_Envio} from './Tela_Envio';
+import {Tela_Envio} from './Tela_Envio/Tela_Envio';
 import Login from './Login/Login'
 
 const Stack = createNativeStackNavigator();

@@ -1,0 +1,12 @@
+.table1 {
+    width: 68%;
+    max-height: 300px;
+    overflow: auto;
+    margin: 10px;
+}
+
+.table2 {
+    max-height: 300px;
+    overflow: auto;
+    margin: 10px;
+}

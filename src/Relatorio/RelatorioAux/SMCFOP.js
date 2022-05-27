@@ -1,10 +1,10 @@
 import React from 'react';
 import {ParaBRL} from '../../util';
-
+// Estilo das tabelas https://dev.to/dcodeyt/creating-beautiful-html-tables-with-css-428l
 export default function SMCFOP(props) {
     return (
         <div className={props.estilo}>
-            <table className="table table-striped">
+            <table className="table styled-table">
                 <thead>
                     <tr>
                         <th>CFOP</th>

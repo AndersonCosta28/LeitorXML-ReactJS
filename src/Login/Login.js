@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import "./loginstyle.css";
+import "./login.css";
 import Loading from '../Loading/Loading'
 import { URL_SERVIDOR, SetHoraFimDaSessao } from '../util';
 
-export default function App({ navigation }) {
+export default function Login({ navigation }) {
     require('dotenv').config()
 
     const [loading, setLoading] = useState(false);
@@ -29,6 +29,7 @@ export default function App({ navigation }) {
                     //console.log(data)
                     SetHoraFimDaSessao()
                     navigation.navigate('Tela_Envio');
+                    document.body.style.backgroundColor = '#fff';
                 }
                 else if (data.statusCode === 403)
                     throw new Error("Usuário inativo");
@@ -46,23 +47,29 @@ export default function App({ navigation }) {
     if (loading) {
         return Loading()
     }
-
     return (
-        <div className='telaLogin centralizar'>
-            <form>
-                <h1 style={{ textAlign: 'center' }}>Seja bem-vindo</h1>
-                <div className='d1'>
-                    <label className='l1'>Usuário:</label>
-                    <input type='text' id='username' name='username' className='i1' onChange={(Event) => setUsuario(Event.target.value)}></input>
+        <div className='bodylogin'>
+            <div class="wrapper fadeInDown">
+                <div id="formContent">
+                    <h2 class="active"> Entrar </h2>
+                    {/* <h2 class="inactive underlineHover">Sign Up </h2> */}
+
+                    {/* <div class="fadeIn first">
+                        <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />
+                    </div> */}
+
+                    <form>
+                        <input type="text" id="login" class="fadeIn second" name="login" placeholder="Usuário"  onChange={(Event) => setUsuario(Event.target.value)} />
+                        <input type="password" id="password" class="fadeIn third" name="login" placeholder="Senha" onChange={(Event) => setSenha(Event.target.value)} />
+                        <input type="submit" class="fadeIn fourth" value="Log In" onClick={() => Submit()}/>
+                    </form>
+
+                    {/* <div id="formFooter">
+                        <a class="underlineHover" href="#">Esqueceu a senha?</a>
+                    </div> */}
+
                 </div>
-                <div className='d1'>
-                    <label className='l1'>Senha:</label>
-                    <input type='password' id='password' name='username' className='i1' onChange={(Event) => setSenha(Event.target.value)} ></input>
-                </div>
-                <div className='d2'>
-                    <a href='/'>Esqueci Senha</a><input type='submit' value='Entrar' className='i1' onClick={() => Submit()}></input>
-                </div>
-            </form >
-        </div >
+            </div>
+        </div>
     )
 }

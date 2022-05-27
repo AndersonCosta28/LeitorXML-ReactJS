@@ -4,7 +4,8 @@ import Err from './RelatorioAux/Err';
 import Tot from './RelatorioAux/Tot';
 import SMCFOP from './RelatorioAux/SMCFOP';
 import pdf from './RelatorioAux/pdf';
-import Xls from './RelatorioAux/Xls'
+import Xls from './RelatorioAux/Xls';
+import "./relatorio.css"
 
 export default function Relatorio(Dados) {
     return (
@@ -13,8 +14,8 @@ export default function Relatorio(Dados) {
                 <div className="col">
                     <Tot Dados={Dados[2]} erros={Dados[4]} estilo="col " />
                     <div style={{display: 'inline-flex'}}>
-                        <div className='Botao'><button title='Gerar PDF' onClick={() => pdf(Dados[1], Dados[2], Dados[3], Dados[5])}>Gerar PDF</button></div>
-                        <div className='Botao'><Xls Dados={Dados[1]}></Xls></div>
+                        <button className='button' title='Gerar PDF' onClick={() => pdf(Dados[1], Dados[2], Dados[3], Dados[5])}>Gerar PDF</button>
+                        <div className='botaoxls'><Xls  Dados={Dados[1]}></Xls></div>
                     </div>
                 </div>
                 <div className="col table2">

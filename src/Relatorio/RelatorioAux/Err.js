@@ -5,7 +5,7 @@ export default function Err(props) {
         <>
             <div className={props.estilo}>
                 <h3 className="titulo">Arquivos não validados</h3>
-                <table className="table table-striped">
+                <table className="table styled-table">
                     <thead>
                         <tr>
                             <th>Arquivo</th>
