@@ -1,4 +1,5 @@
 import React from 'react';
+import '../relatorio.css'
 
 export default function Err(props) {
     return (

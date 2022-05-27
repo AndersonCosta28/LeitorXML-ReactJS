@@ -30,6 +30,7 @@ export default function Login({ navigation }) {
                     SetHoraFimDaSessao()
                     navigation.navigate('Tela_Envio');
                     document.body.style.backgroundColor = '#fff';
+                    document.body.style.margin = 0;
                 }
                 else if (data.statusCode === 403)
                     throw new Error("Usuário inativo");

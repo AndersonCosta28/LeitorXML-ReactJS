@@ -1,5 +1,6 @@
 import React from 'react';
 import {ParaBRL} from '../../util';
+import '../relatorio.css'
 
 export default function Tot(props) {
     return (

@@ -2,6 +2,10 @@
     background-color: #FFF;
 } */
 
+body {
+    margin: 0;
+}
+
 .FimSessao {
     text-align: end;
 }
@@ -9,7 +13,7 @@
 #form {
     padding: 15px 15px;
     /* background: #50c6d8; */
-    background-color: #56BAED ;
+    background-color: #56BAED;
     padding-left: 2%;
     color: #fff;
 }
@@ -18,4 +22,4 @@
     position: fixed;
     top: 50%;
     left: 30%;
-  }
+}
