@@ -3,7 +3,7 @@ import { useHomePage } from '../context/HomePageContext'
 import './sidebar.css'
 
 export function SideBar() {
-    const { PaginaAtual, SetPaginaAtual } = useHomePage()
+    const { SetPaginaAtual } = useHomePage()
     const BotaoCollapse = useRef()
     return (
         <div className='main' >

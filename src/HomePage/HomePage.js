@@ -1,19 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 import CompararLados from '../CompararLados/CompararLados';
 import { useHomePage } from '../context/HomePageContext';
-import Loading from '../Loading/Loading';
 import { SideBar } from '../SiderBar/SiderBar';
 import { Tela_Envio as TelaEnvio } from '../Tela_Envio/Tela_Envio';
 import './homepage.css';
 
 
 export function HomePage() {
-    const { PaginaAtual, SetPaginaAtual } = useHomePage()
+    const { PaginaAtual } = useHomePage()
 
     function PaginaParaRenderizar(){
-        if(PaginaAtual == 1)
+        if(PaginaAtual === 1)
             return TelaEnvio()
-        else if (PaginaAtual == 2)
+        else if (PaginaAtual === 2)
             return CompararLados()
     }
     

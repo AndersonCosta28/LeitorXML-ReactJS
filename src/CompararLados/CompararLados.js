@@ -7,12 +7,17 @@ export default function CompararLados() {
     const [Contem, SetContem] = useState([])
     const [NaoContem, SetNaoContem] = useState([])
 
+    function RetornaNumeroValido(num) {
+        if (num === ' ') { }
+        else if (isNaN(num)) { }
+        else return Number(num)
+    }
+
 
 
     function Comparar() {
-        const A = LadoA.length == 0 ? [] : LadoA.split('\n').map(item => { if (item == ' ') { } else return Number(item) });
-        const B = LadoB.length == 0 ? [] : LadoB.split('\n').map(item => { if (item == ' ') { } else return Number(item) });
-        console.log(LadoA.split('\n').map(item => { if (item == ' ') { console.log(item) } else return Number(item) }))
+        const A = LadoA.length === 0 ? [] : LadoA.split('\n').filter(numero => RetornaNumeroValido(numero));
+        const B = LadoB.length === 0 ? [] : LadoB.split('\n').filter(numero => RetornaNumeroValido(numero));
         const contem = [];
         const naocontem = [];
         A.forEach((item, index) => {
