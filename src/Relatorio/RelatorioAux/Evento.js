@@ -1,12 +1,11 @@
 import React from 'react';
-import '../relatorio.css'
 
 export default function Evento(props) {
     return (
         <>
             <div className={props.estilo}>
                 <h3 className="titulo">Eventos</h3>
-                <table className="table styled-table">
+                <table className="table table-striped">
                     <thead>
                         <tr>
                             <th>Nº</th>

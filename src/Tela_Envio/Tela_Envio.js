@@ -54,7 +54,7 @@ export function Tela_Envio() {
 
     return (
         <header>
-            <div id="form">
+            <div id="form" className='form'>
                 <div className='row'>
                     <div className='col'>
                         <h1>Formulário de envio</h1>
@@ -68,7 +68,7 @@ export function Tela_Envio() {
                     <button className="button botaosubmit" disabled={!!loading}>Enviar</button>
                 </form>
             </div>
-            <div>
+            <div id='corpo'>
                 {loading && !Rel ? Loading() : !Rel ? Recomendacoes() : Relatorio(Dados)}
             </div>
         </header>
@@ -76,7 +76,7 @@ export function Tela_Envio() {
 }
 function Recomendacoes() {
     return (
-        <div className='centralizarRecomendacoes'>
+        <div className='Recomendacoes'>
             <h1>Recomendações</h1>
             <ul>
                 <li>Escolher arquivo .zip, extensão .rar e demais não são compatíveis.</li>

@@ -1,11 +1,10 @@
 import React from 'react';
 import {ParaBRL} from '../../util';
-import '../relatorio.css'
 
 export default function TDN(props) {
     return (
         <div className={props.estilo}>
-            <table className="table styled-table">
+            <table className="table table-striped">
                 <thead>
                     <tr>
                         <th>Nº</th>

@@ -12,10 +12,10 @@ export default function Relatorio(Dados) {
         <div>
             <div className="row align-items-center">
                 <div className="col">
-                    <Tot Dados={Dados[2]} erros={Dados[4]} estilo="col " />
-                    <div style={{display: 'inline-flex'}}>
+                    <Tot Dados={Dados[2]} erros={Dados[4]} estilo="col" />
+                    <div style={{ display: 'inline-flex' }}>
                         <button className='button' title='Gerar PDF' onClick={() => pdf(Dados[1], Dados[2], Dados[3], Dados[5])}>Gerar PDF</button>
-                        <div className='botaoxls'><Xls  Dados={Dados[1]}></Xls></div>
+                        <div className='botaoxls'><Xls Dados={Dados[1]}></Xls></div>
                     </div>
                 </div>
                 <div className="col table2">

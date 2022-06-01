@@ -28,9 +28,8 @@ export default function Login({ navigation }) {
                     sessionStorage.setItem('token', 'Bearer ' + data.access_token)
                     //console.log(data)
                     SetHoraFimDaSessao()
-                    navigation.navigate('Tela_Envio');
-                    document.body.style.backgroundColor = '#fff';
-                    document.body.style.margin = 0;
+                    navigation.navigate('HomePage');
+                    // document.body.style.backgroundColor = '#fff';
                 }
                 else if (data.statusCode === 403)
                     throw new Error("Usuário inativo");
