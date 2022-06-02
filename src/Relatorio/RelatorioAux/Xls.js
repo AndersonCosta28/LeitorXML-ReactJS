@@ -1,20 +1,22 @@
 import React from "react";
 import ReactExport from "react-export-excel";
+import { useDadosRelatorio } from "../../context/DadosRelatorioContext"; 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 //https://stackoverflow.com/questions/61316889/how-to-export-data-to-excel-using-react-libraries
 
-export default function Xls(props) {
-    const data = props.Dados
+export default function Xls() {
+    const { DadosRelatorio } = useDadosRelatorio();
+    const { Todas_As_Notas } = DadosRelatorio;
     const camelCase = (str) => {
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     };
 
-    const filterColumns = (data) => {
+    const filterColumns = (Todas_As_Notas) => {
         // Get column names
-        const columns = Object.keys(data[0]);
+        const columns = Object.keys(Todas_As_Notas[0]);
 
         // Remove by key (firstname)
         const filterColsByKey = columns.filter(c => !['desconto', 'data_recebimento', 'produto', 'emitente'].includes(c));
@@ -27,9 +29,9 @@ export default function Xls(props) {
     return (
         <div className="App">
             <ExcelFile filename="Relatorio" element={<button>Baixar em EXCEL</button>}>
-                <ExcelSheet data={data} name="Relatorio">
+                <ExcelSheet data={Todas_As_Notas} name="Relatorio">
                     {
-                        filterColumns(data).map((col) => {
+                        filterColumns(Todas_As_Notas).map((col) => {
                             return <ExcelColumn label={camelCase(col)} value={col} key='numero' />
                         })
                     }
@@ -58,7 +60,7 @@ export default function Xls(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map(item => {
+                    {Todas_As_Notas.map(item => {
                         return (
                             <tr key={item.numero}>
                                 <td>{item.numero}</td>

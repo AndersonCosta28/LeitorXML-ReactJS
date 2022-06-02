@@ -1,6 +1,9 @@
 import React from 'react';
+import { useDadosRelatorio } from '../../context/DadosRelatorioContext';
 
 export default function Err(props) {
+    const { DadosRelatorio } = useDadosRelatorio();
+    const { Total_de_erros } = DadosRelatorio;
     return (
         <>
             <div className={props.estilo}>
@@ -13,7 +16,7 @@ export default function Err(props) {
                         </tr>
                     </thead>
                     <tbody>
-                        {props.erros.map(element =>
+                        {Total_de_erros.map(element =>
                             <tr key={element.nome}>
                                 <td>{element.nome}</td>
                                 <td>{element.motivo}</td>

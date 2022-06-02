@@ -1,7 +1,10 @@
 import React from 'react';
-import {ParaBRL} from '../../util';
+import { useDadosRelatorio } from '../../context/DadosRelatorioContext';
+import { ParaBRL } from '../../util';
 // Estilo das tabelas https://dev.to/dcodeyt/creating-beautiful-html-tables-with-css-428l
 export default function SD(props) {
+    const { DadosRelatorio } = useDadosRelatorio();
+    const { Soma_Dia } = DadosRelatorio
     return (
         <div className={props.estilo}>
             <table className="table styled-table">
@@ -13,7 +16,7 @@ export default function SD(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {props.Dados.map(element =>
+                    {Soma_Dia.map(element =>
                         <tr key={element.data}>
                             <td>{element.data}</td>
                             <td>{element.quantidade}</td>

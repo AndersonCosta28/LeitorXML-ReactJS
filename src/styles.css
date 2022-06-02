@@ -22,23 +22,19 @@
   color: white;
 }
 
-.button,
-.botaoxls button {
-  /* width: 400px; */
-  /* height: 100px; */
+.button, .botaoxls button {
   background: #fff;
   position: relative;
-  color: #fff;
   margin-bottom: 25px;
   border-radius: 32px;
   text-align: center;
   cursor: pointer;
   transition: all 0.1s ease-in-out;
-  margin: 10px
+  margin: 10px;
+  color: red
 }
 
-.button span,
-.botaoxls button span {
+.button span, .botaoxls button span {
   line-height: 100px;
   font-family: sans-serif;
   font-size: 32px;
@@ -76,16 +72,4 @@
 .button:nth-child(3):hover {
   opacity: 1;
   box-shadow: -6px -6px 10px rgba(255, 255, 255, 0.8), 6px 6px 10px rgba(0, 0, 0, 0.2);
-}
-
-.botaoxls button {
-  color: red
-}
-
-.botaosubmit:disabled {
-  background: brown;
-}
-
-.botaosubmit:hover {
-  background: yellow;
 }

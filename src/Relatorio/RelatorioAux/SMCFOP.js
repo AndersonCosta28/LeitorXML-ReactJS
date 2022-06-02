@@ -1,7 +1,10 @@
 import React from 'react';
-import {ParaBRL} from '../../util';
+import { useDadosRelatorio } from '../../context/DadosRelatorioContext';
+import { ParaBRL } from '../../util';
 // Estilo das tabelas https://dev.to/dcodeyt/creating-beautiful-html-tables-with-css-428l
 export default function SMCFOP(props) {
+    const { DadosRelatorio } = useDadosRelatorio()
+    const { Soma_CFOP } = DadosRelatorio;
     return (
         <div className={props.estilo}>
             <table className="table styled-table">
@@ -14,7 +17,7 @@ export default function SMCFOP(props) {
                 </thead>
                 <tbody>
                     {
-                        props.Dados.map(element =>
+                        Soma_CFOP.map(element =>
                             <tr key={element.cfop}>
                                 <td>{element.cfop}</td>
                                 <td>{element.quantidade}</td>

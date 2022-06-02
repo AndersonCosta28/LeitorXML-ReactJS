@@ -2,7 +2,7 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import { ParaBRL } from "../../util";
 
-export default function pdf(Todas_As_Notas, Total, Soma_CFOP, Todos_Os_Eventos) {
+export default function pdf({Todas_As_Notas, Total, Soma_CFOP, Todos_Os_Eventos}) {
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
   const ArrayTodos_Os_Eventos = Todos_Os_Eventos.map(value => {

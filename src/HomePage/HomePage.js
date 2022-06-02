@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import CompararLados from '../CompararLados/CompararLados';
 import { useHomePage } from '../context/HomePageContext';
-import { SideBar } from '../SiderBar/SiderBar';
-import { Tela_Envio as TelaEnvio } from '../Tela_Envio/Tela_Envio';
+import SideBar from '../SiderBar/SiderBar';
+import TelaEnvio from '../TelaEnvio/TelaEnvio';
+
 import './homepage.css';
 
 
-export function HomePage() {
+export default function HomePage() {
     const { PaginaAtual } = useHomePage()
 
     function PaginaParaRenderizar(){
@@ -21,6 +22,7 @@ export function HomePage() {
     return (
         <div id='pagina' ref={pagina} className='pagina'>
             <SideBar />
+            
             <PaginaParaRenderizar></PaginaParaRenderizar>
         </div>
     )

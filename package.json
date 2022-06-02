@@ -6,22 +6,18 @@
         "@progress/kendo-licensing": "^1.2.2",
         "@progress/kendo-react-excel-export": "^5.0.1",
         "@progress/kendo-react-grid": "^5.0.1",
-        "@react-navigation/native": "^6.0.8",
-        "@react-navigation/native-stack": "^6.5.0",
         "@testing-library/jest-dom": "^5.16.2",
         "@testing-library/react": "^12.1.3",
         "@testing-library/user-event": "^13.5.0",
         "dotenv": "^16.0.0",
         "express": "^4.17.3",
+        "jwt-decode": "^3.1.2",
         "path": "^0.12.7",
         "pdfmake": "^0.2.4",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
         "react-export-excel": "^0.5.3",
-        "react-native-safe-area-context": "^4.1.2",
-        "react-native-screens": "^3.13.1",
-        "react-native-web": "^0.17.7",
-        "react-router-dom": "^6.2.2",
+        "react-router-dom": "^6.3.0",
         "react-scripts": "^3.0.1",
         "web-vitals": "^2.1.4"
     },
@@ -48,5 +44,8 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "eslint-plugin-react-hooks": "^1.7.0"
     }
 }

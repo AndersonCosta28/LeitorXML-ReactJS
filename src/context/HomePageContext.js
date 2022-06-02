@@ -6,10 +6,9 @@ export const HomePageContext = createContext();
 export default function HomePageProvider({ children }) {
     const [PaginaAtual, SetPaginaAtual] = useState(1);
 
-    return <HomePageContext.Provider value={{
-        PaginaAtual, SetPaginaAtual
-    }}>{children}</HomePageContext.Provider>
+    return (<HomePageContext.Provider value={{ PaginaAtual, SetPaginaAtual }}>{children}</HomePageContext.Provider>)
 }
+
 export function useHomePage() {
     const context = useContext(HomePageContext)
     const { PaginaAtual, SetPaginaAtual } = context

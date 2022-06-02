@@ -1,15 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./login.css";
 import Loading from '../Loading/Loading'
-import { URL_SERVIDOR, SetHoraFimDaSessao } from '../util';
+import { useNavigate } from 'react-router-dom';
+import { GetHoraFimDaSessao, URL_SERVIDOR } from '../util';
+import jwtDecode from 'jwt-decode';
 
-export default function Login({ navigation }) {
+
+export default function Login() {
     require('dotenv').config()
 
     const [loading, setLoading] = useState(false);
     const [Usuario, setUsuario] = useState('');
-    const [Senha, setSenha] = useState('')
+    const [Senha, setSenha] = useState('');
 
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        document.getElementById('nomerodape').style.color = 'black'
+        return () => {            
+            document.getElementById('nomerodape').style.color = '#92badd'
+            setUsuario('');
+            setSenha('');
+            setLoading(false);
+        }
+    }, [])
 
     function Submit() {
         setLoading(true);
@@ -25,11 +39,12 @@ export default function Login({ navigation }) {
             .then(res => res.json())
             .then(data => {
                 if (data.access_token) {
+                    const decoded = jwtDecode(data.access_token);
+                    // console.log(decoded)
                     sessionStorage.setItem('token', 'Bearer ' + data.access_token)
-                    //console.log(data)
-                    SetHoraFimDaSessao()
-                    navigation.navigate('HomePage');
-                    // document.body.style.backgroundColor = '#fff';
+                    sessionStorage.setItem('FimSessao', GetHoraFimDaSessao())
+                    sessionStorage.setItem('nome_usuario', decoded.usuario)
+                    navigate("HomePage");
                 }
                 else if (data.statusCode === 403)
                     throw new Error("Usuário inativo");
@@ -37,7 +52,6 @@ export default function Login({ navigation }) {
                     throw new Error(data.message)
             })
             .catch(e => {
-                //console.log(e)
                 alert(e)
             })
             .finally(() => {
@@ -59,15 +73,15 @@ export default function Login({ navigation }) {
                     </div> */}
 
                     <form>
-                        <input type="text" id="login" className="fadeIn second" name="login" placeholder="Usuário"  onChange={(Event) => setUsuario(Event.target.value)} />
+                        <input type="text" id="login" className="fadeIn second" name="login" placeholder="Usuário" onChange={(Event) => setUsuario(Event.target.value)} />
                         <input type="password" id="password" className="fadeIn third" name="login" placeholder="Senha" onChange={(Event) => setSenha(Event.target.value)} />
-                        <input type="submit" className="fadeIn fourth" value="Log In" onClick={() => Submit()}/>
+                        <input type="submit" className="fadeIn fourth" value="Log In" onClick={() => Submit()} />
                     </form>
 
                     {/* <div id="formFooter">
                         <a className="underlineHover" href="#">Esqueceu a senha?</a>
                     </div> */}
-
+                    {/* <button style={{display: 'none'}} onClick={goHome}></button> */}
                 </div>
             </div>
         </div>
