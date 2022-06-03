@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ValidarTempoFimSessao } from '../util';
 import './CompararLados.css';
 
 export default function CompararLados() {
@@ -7,15 +9,20 @@ export default function CompararLados() {
     const [Contem, SetContem] = useState([])
     const [NaoContem, SetNaoContem] = useState([])
 
+    let navigate = useNavigate();
+
     function RetornaNumeroValido(num) {
         if (num === ' ') { }
         else if (isNaN(num)) { }
         else return Number(num)
     }
 
-
-
     function Comparar() {
+        if (ValidarTempoFimSessao()) {
+            navigate('../');
+            return;
+        }
+
         const A = LadoA.length === 0 ? [] : LadoA.split('\n').filter(numero => RetornaNumeroValido(numero));
         const B = LadoB.length === 0 ? [] : LadoB.split('\n').filter(numero => RetornaNumeroValido(numero));
         const contem = [];

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import "./login.css";
 import Loading from '../Loading/Loading'
 import { useNavigate } from 'react-router-dom';
-import { GetHoraFimDaSessao, URL_SERVIDOR } from '../util';
+import { URL_SERVIDOR } from '../util';
 import jwtDecode from 'jwt-decode';
 
 
@@ -17,7 +17,7 @@ export default function Login() {
 
     useEffect(() => {
         document.getElementById('nomerodape').style.color = 'black'
-        return () => {            
+        return () => {
             document.getElementById('nomerodape').style.color = '#92badd'
             setUsuario('');
             setSenha('');
@@ -40,9 +40,9 @@ export default function Login() {
             .then(data => {
                 if (data.access_token) {
                     const decoded = jwtDecode(data.access_token);
-                    // console.log(decoded)
                     sessionStorage.setItem('token', 'Bearer ' + data.access_token)
-                    sessionStorage.setItem('FimSessao', GetHoraFimDaSessao())
+                    sessionStorage.setItem('FimSessaoMilesegundos', new Date(decoded.exp * 1000));
+                    sessionStorage.setItem('FimSessaoDataLocal', new Date(decoded.exp * 1000).toLocaleTimeString());
                     sessionStorage.setItem('nome_usuario', decoded.usuario)
                     navigate("HomePage");
                 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import CompararLados from '../CompararLados/CompararLados';
 import { useHomePage } from '../context/HomePageContext';
 import SideBar from '../SiderBar/SiderBar';
@@ -16,13 +16,9 @@ export default function HomePage() {
         else if (PaginaAtual === 2)
             return CompararLados()
     }
-    
-    const pagina = useRef()
-    useEffect(() => { }, [])
     return (
-        <div id='pagina' ref={pagina} className='pagina'>
+        <div id='pagina' className='pagina'>
             <SideBar />
-            
             <PaginaParaRenderizar></PaginaParaRenderizar>
         </div>
     )

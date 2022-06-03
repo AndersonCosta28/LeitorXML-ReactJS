@@ -1,8 +1,16 @@
+import React from 'react'
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import { ParaBRL } from "../../util";
+import { useDadosRelatorio } from '../../context/DadosRelatorioContext';
 
-export default function pdf({Todas_As_Notas, Total, Soma_CFOP, Todos_Os_Eventos}) {
+
+export function GerarPDF(){
+  const { DadosRelatorio } = useDadosRelatorio()
+  return (<button className='button' style={{ display: 'inline-block' }} title='Gerar PDF' onClick={() => pdf(DadosRelatorio)}>Gerar PDF</button>)
+}
+
+export function pdf({Todas_As_Notas, Total, Soma_CFOP, Todos_Os_Eventos}) {
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
   const ArrayTodos_Os_Eventos = Todos_Os_Eventos.map(value => {

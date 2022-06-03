@@ -4,7 +4,7 @@ import { createContext } from 'react'
 export const DadosRelatorioContext = createContext();
 
 export default function DadosRelatorioProvider({ children }) {
-    const [DadosRelatorio, SetDadosRelatorio] = useState();
+    const [DadosRelatorio, SetDadosRelatorio] = useState({Loading: false, Relatorio: false });
 
     return (<DadosRelatorioContext.Provider value={{ DadosRelatorio, SetDadosRelatorio }}>{children}</DadosRelatorioContext.Provider>)
 }

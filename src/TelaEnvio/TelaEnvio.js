@@ -3,25 +3,30 @@ import "../styles.css";
 import "./telaenvio.css"
 import Loading from '../Loading/Loading.js'
 import Relatorio from '../Relatorio/Relatorio.js'
-import { URL_SERVIDOR } from '../util';
+import { URL_SERVIDOR, ValidarTempoFimSessao } from '../util';
 import { useDadosRelatorio } from '../context/DadosRelatorioContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function TelaEnvio() {
 
     const [Arquivo, setArquivo] = useState();
-    const [loading, setLoading] = useState(false);
+    const [Exibir, SetExibir] = useState({ Loading: false, Relatorio: false });
     const { SetDadosRelatorio } = useDadosRelatorio();
-    
-    const [Rel, SetRel] = useState(false);
+    let navigate = useNavigate();
 
     function Submit(event) {
         event.preventDefault();
+
+        if (ValidarTempoFimSessao()) {
+            navigate('../');
+            return;
+        }
+
         if (!Arquivo) {
             alert('Antes de enviar, selecione um arquivo.');
             return;
         }
-        setLoading(true);
-        SetRel(false);
+        SetExibir({ Loading: true, Relatorio: false });
         FazerRequisicao()
     }
 
@@ -40,20 +45,19 @@ export default function TelaEnvio() {
                 if (data.statusCode !== undefined || null)
                     throw new Error(`${data.statusCode} - ${data.message}`)
                 SetDadosRelatorio({
-                    Soma_Dia : data[0],
-                    Todas_As_Notas : data[1],
-                    Total : data[2],
-                    Soma_CFOP : data[3],
+                    Soma_Dia: data[0],
+                    Todas_As_Notas: data[1],
+                    Total: data[2],
+                    Soma_CFOP: data[3],
                     Total_de_erros: data[4],
                     Todos_Os_Eventos: data[5]
                 })
-                SetRel(true)
             })
             .catch(e => {
                 alert(e)
             })
             .finally(() => {
-                setLoading(false);
+                SetExibir({ Loading: false, Relatorio: true });
             });
     }
     return (
@@ -64,16 +68,16 @@ export default function TelaEnvio() {
                         <h1>Formulário de envio</h1>
                     </div>
                     <div className='col'>
-                        <h4 className='FimSessao'>Fim da sessão às : {sessionStorage.getItem('FimSessao')}</h4>
+                        <h4 className='FimSessao'>Fim da sessão às : {sessionStorage.getItem('FimSessaoDataLocal')}</h4>
                     </div>
                 </div>
                 <form onSubmit={Submit}>
                     <input type="file" name="file" aria-label='File browser example' accept=".zip" onChange={(value) => setArquivo(value.target.files[0])} />
-                    <button className="button botaosubmit" disabled={!!loading}>Enviar</button>
+                    <button type='submit' className="button botaosubmit" disabled={!!Exibir.Loading}>Enviar</button>
                 </form>
             </div>
             <div id='corpo'>
-                {loading && !Rel ? Loading() : !Rel ? Recomendacoes() : Relatorio()}
+                {Exibir.Loading ? Loading() : !Exibir.Relatorio ? Recomendacoes() : Relatorio()}
             </div>
         </header>
     )
