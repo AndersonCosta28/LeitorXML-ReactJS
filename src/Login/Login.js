@@ -25,7 +25,8 @@ export default function Login() {
         }
     }, [])
 
-    function Submit() {
+    function Submit(event) {
+        event.preventDefault();
         setLoading(true);
         const data = { usuario: Usuario, senha: Senha }
         const config = {
@@ -40,8 +41,9 @@ export default function Login() {
             .then(data => {
                 if (data.access_token) {
                     const decoded = jwtDecode(data.access_token);
+                    // console.log(decoded)
                     sessionStorage.setItem('token', 'Bearer ' + data.access_token)
-                    sessionStorage.setItem('FimSessaoMilesegundos', new Date(decoded.exp * 1000));
+                    sessionStorage.setItem('FimSessaoMilesegundos', new Date(decoded.exp * 1000).getTime());
                     sessionStorage.setItem('FimSessaoDataLocal', new Date(decoded.exp * 1000).toLocaleTimeString());
                     sessionStorage.setItem('nome_usuario', decoded.usuario)
                     navigate("HomePage");
@@ -72,10 +74,10 @@ export default function Login() {
                         <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />
                     </div> */}
 
-                    <form>
+                    <form onSubmit={Submit}>
                         <input type="text" id="login" className="fadeIn second" name="login" placeholder="Usuário" onChange={(Event) => setUsuario(Event.target.value)} />
                         <input type="password" id="password" className="fadeIn third" name="login" placeholder="Senha" onChange={(Event) => setSenha(Event.target.value)} />
-                        <input type="submit" className="fadeIn fourth" value="Log In" onClick={() => Submit()} />
+                        <input type="submit" className="fadeIn fourth" value="Log In" />
                     </form>
 
                     {/* <div id="formFooter">

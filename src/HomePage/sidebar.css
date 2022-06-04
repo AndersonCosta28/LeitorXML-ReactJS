@@ -1,0 +1,29 @@
+.main {
+    padding: 10px;
+    height: 100vh;
+    background: linear-gradient(#e66465, #9198e5);
+}
+
+.DivUserInfo {
+    top: 90vh;
+    position: absolute;
+}
+
+.ItemMenu {
+    cursor: pointer;
+    margin: 10px 10px;
+    transition-property: padding-left, background;
+    transition-duration: 0.2s;
+    transition-timing-function: linear;
+}
+
+.ItemMenu:hover {
+    background: #50c6d8;
+    padding-left: 50px;
+    /* font-size: 1.2rem; */
+    /* transition: background 1s ease-out; */
+    /*Querem dizer a mesma coisa*/
+    transition-property: all;
+    transition-duration: 0.2s;
+    transition-timing-function: linear;
+}

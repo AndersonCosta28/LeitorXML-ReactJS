@@ -7,10 +7,12 @@ export const ParaBRL = new Intl.NumberFormat('pt-BR', { //Formatar para Real R$
 export const URL_SERVIDOR = process.env.REACT_APP_PRODUCAO === 'true' ? 'https://leitorxml-backend.herokuapp.com' : 'http://localhost:8080';
 
 export function ValidarTempoFimSessao() {
-    if (new Date() >= sessionStorage.getItem('FimSessaoMilesegundos')) {
-        console.log(sessionStorage.getItem('FimSessaoMilesegundos'), new Date())
+    const HoraAtual = new Date().getTime();
+    const HoraSessao = sessionStorage.getItem('FimSessaoMilesegundos');
+    if (HoraAtual >= HoraSessao) {
         alert('Expirou o tempo da Sessão, por favor faça login novamente para renovar');
-        return true;        
+        return true;
     }
-    return false
+    else
+        return false
 }
