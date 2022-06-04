@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "../styles.css";
 import "./telaenvio.css"
-import Loading from '../Loading/Loading.js'
 import Relatorio from '../Relatorio/Relatorio.js'
-import { URL_SERVIDOR, ValidarTempoFimSessao } from '../util';
+import { URL_SERVIDOR, ValidarTempoFimSessao } from '../utils/util'
 import { useDadosRelatorio } from '../context/DadosRelatorioContext';
 import { useNavigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
+
 
 export default function TelaEnvio() {
-
     const [Arquivo, setArquivo] = useState();
     const [Exibir, SetExibir] = useState({ Loading: false, Relatorio: false });
     const { SetDadosRelatorio } = useDadosRelatorio();
     let navigate = useNavigate();
+
+    useEffect(() => {
+        if (sessionStorage.getItem('FimSessaoMilesegundos') == null) {
+            alert('Parece que você tentou acessar uma rota sem fazer LOGIN, você será redirecionado para a página de LOGIN.');
+            navigate('../');
+            return;
+        }
+    })
 
     function Submit(event) {
         event.preventDefault();
@@ -23,14 +31,16 @@ export default function TelaEnvio() {
         }
 
         if (!Arquivo) {
-            alert('Antes de enviar, selecione um arquivo.');
+            toast('Antes de enviar, selecione um arquivo.', { icon: '❗️' });
             return;
         }
+
         SetExibir({ Loading: true, Relatorio: false });
-        FazerRequisicao()
+        const ConfiguracaoRequisicao = ConfigurarRequisicao();
+        FazerRequisicao(ConfiguracaoRequisicao);
     }
 
-    function FazerRequisicao() {
+    function ConfigurarRequisicao() {
         const data = new FormData();
         data.append("file", Arquivo);
         const config = {
@@ -38,12 +48,18 @@ export default function TelaEnvio() {
             body: data,
             headers: { 'Authorization': sessionStorage.getItem('token') }
         }
+        return config;
+    }
 
+    function FazerRequisicao(config) {
+        const NotificacaoDeCarregamento = toast.loading('Carregando');
         fetch(URL_SERVIDOR + '/upload', config)
             .then(res => res.json())
             .then(data => {
                 if (data.statusCode !== undefined || null)
                     throw new Error(`${data.statusCode} - ${data.message}`)
+                toast.dismiss(NotificacaoDeCarregamento);
+                toast.success('Relatório Rendezirado');
                 SetDadosRelatorio({
                     Soma_Dia: data[0],
                     Todas_As_Notas: data[1],
@@ -54,7 +70,7 @@ export default function TelaEnvio() {
                 })
             })
             .catch(e => {
-                alert(e)
+                toast.error(e)
             })
             .finally(() => {
                 SetExibir({ Loading: false, Relatorio: true });
@@ -62,6 +78,10 @@ export default function TelaEnvio() {
     }
     return (
         <header>
+            <Toaster
+                position="bottom-right"
+                reverseOrder={true}
+            />
             <div id="form" className='form'>
                 <div className='row'>
                     <div className='col'>
@@ -77,7 +97,7 @@ export default function TelaEnvio() {
                 </form>
             </div>
             <div id='corpo'>
-                {Exibir.Loading ? Loading() : !Exibir.Relatorio ? Recomendacoes() : Relatorio()}
+                {!Exibir.Relatorio ? Recomendacoes() : Relatorio()}
             </div>
         </header>
     )

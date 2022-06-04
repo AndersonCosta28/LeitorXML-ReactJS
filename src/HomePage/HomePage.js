@@ -50,9 +50,9 @@ export default function HomePage() {
             <nav className='main' >
                 <div>
                     <p>
-                        <a href={() => false} ref={BotaoCollapse} onClick={ExibirOuOcultarNomeDeUsuario} className="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSideBar" aria-expanded="false" aria-controls="collapseSideBar">
+                        <span ref={BotaoCollapse} onClick={ExibirOuOcultarNomeDeUsuario} className="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSideBar" aria-expanded="false" aria-controls="collapseSideBar">
                             Menu
-                        </a>
+                        </span>
                     </p>
                 </div>
 
@@ -60,8 +60,8 @@ export default function HomePage() {
                     <div className="collapse collapse-horizontal" id="collapseSideBar">
                         <div className="card card-body" style={{ width: '300px' }}>
                             <ul className="nav nav-pills flex-column mb-auto">
-                                <li className='ItemMenu nav-item' onClick={() => { SetPaginaAtual(0) }}><a href={() => false} ref={ItemMenu1}>Gerar relatório de XML's zipado</a></li>
-                                <li className='ItemMenu nav-item' onClick={() => { SetPaginaAtual(1) }}><a href={() => false} ref={ItemMenu2}>Comparar lista de valores</a></li>
+                                <li className='ItemMenu nav-item' onClick={() => { SetPaginaAtual(0) }}><span href='' ref={ItemMenu1}>Gerar relatório de XML's zipado</span></li>
+                                <li className='ItemMenu nav-item' onClick={() => { SetPaginaAtual(1) }}><span href='' ref={ItemMenu2}>Comparar lista de valores</span></li>
                             </ul>
                             <hr />
                         </div>
@@ -81,7 +81,7 @@ export default function HomePage() {
                         <li><a className="dropdown-item" href="#">Profile</a></li>
                         <li><hr className="dropdown-divider" /></li> */}
                         {/* <li><a className="dropdown-item" href="#">Sign out</a></li> */}
-                        <li ><a href={() => {}} className="dropdown-item" onClick={sair}>Sair</a></li>
+                        <li ><span href='' className="dropdown-item" onClick={sair}>Sair</span></li>
                     </ul>
                 </div>
             </nav>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ValidarTempoFimSessao } from '../util';
+import { ValidarTempoFimSessao } from '../utils/util';
 import './CompararLados.css';
 
 export default function CompararLados() {

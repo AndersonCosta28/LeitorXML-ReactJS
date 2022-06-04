@@ -1,5 +1,5 @@
 import React from 'react';
-import {ParaBRL} from '../../util';
+import { ParaBRL } from '../../utils/util'; 
 
 export default function TDN(props) {
     return (

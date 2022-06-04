@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDadosRelatorio } from '../../context/DadosRelatorioContext';
-import {ParaBRL} from '../../util';
+import { ParaBRL } from '../../utils/util';
 
 export default function Tot(props) {
     const { DadosRelatorio } = useDadosRelatorio()

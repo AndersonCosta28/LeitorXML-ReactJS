@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDadosRelatorio } from '../../context/DadosRelatorioContext';
-import { ParaBRL } from '../../util';
+import { ParaBRL } from '../../utils/util'; 
 // Estilo das tabelas https://dev.to/dcodeyt/creating-beautiful-html-tables-with-css-428l
 export default function SD(props) {
     const { DadosRelatorio } = useDadosRelatorio();

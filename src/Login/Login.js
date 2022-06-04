@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import "./login.css";
 import Loading from '../Loading/Loading'
 import { useNavigate } from 'react-router-dom';
-import { URL_SERVIDOR } from '../util';
+import { URL_SERVIDOR } from '../utils/util';
 import jwtDecode from 'jwt-decode';
-
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function Login() {
     require('dotenv').config()
@@ -16,6 +16,8 @@ export default function Login() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        sessionStorage.clear();
+        localStorage.clear();
         document.getElementById('nomerodape').style.color = 'black'
         return () => {
             document.getElementById('nomerodape').style.color = '#92badd'
@@ -41,20 +43,23 @@ export default function Login() {
             .then(data => {
                 if (data.access_token) {
                     const decoded = jwtDecode(data.access_token);
-                    // console.log(decoded)
                     sessionStorage.setItem('token', 'Bearer ' + data.access_token)
                     sessionStorage.setItem('FimSessaoMilesegundos', new Date(decoded.exp * 1000).getTime());
                     sessionStorage.setItem('FimSessaoDataLocal', new Date(decoded.exp * 1000).toLocaleTimeString());
                     sessionStorage.setItem('nome_usuario', decoded.usuario)
                     navigate("HomePage");
                 }
-                else if (data.statusCode === 403)
-                    throw new Error("Usuário inativo");
+
                 else
                     throw new Error(data.message)
             })
             .catch(e => {
-                alert(e)
+                console.log(e)
+                if (String(e).includes('TypeError: Failed to fetch'))
+                    toast.error('Ocorreu um erro para conectar ao servidor, reporte a situação para o desenvolvedor')
+
+                else
+                    toast.error(e.message)
             })
             .finally(() => {
                 setLoading(false);
@@ -79,6 +84,10 @@ export default function Login() {
                         <input type="password" id="password" className="fadeIn third" name="login" placeholder="Senha" onChange={(Event) => setSenha(Event.target.value)} />
                         <input type="submit" className="fadeIn fourth" value="Log In" />
                     </form>
+                    <Toaster
+                        position="bottom-right"
+                        reverseOrder={true}
+                    />
 
                     {/* <div id="formFooter">
                         <a className="underlineHover" href="#">Esqueceu a senha?</a>
