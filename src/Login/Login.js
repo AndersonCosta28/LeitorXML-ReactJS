@@ -2,19 +2,17 @@ import React, { useEffect, useState } from 'react';
 import "./login.css";
 import Loading from '../Loading/Loading'
 import { useNavigate } from 'react-router-dom';
-import { URL_SERVIDOR } from '../utils/util';
 import jwtDecode from 'jwt-decode';
 import toast, { Toaster } from 'react-hot-toast';
 
 export default function Login() {
-    require('dotenv').config()
-
+    
     const [loading, setLoading] = useState(false);
     const [Usuario, setUsuario] = useState('');
     const [Senha, setSenha] = useState('');
+    const {REACT_APP_SERVIDOR} = process.env;
 
     const navigate = useNavigate();
-
     useEffect(() => {
         sessionStorage.clear();
         localStorage.clear();
@@ -38,7 +36,7 @@ export default function Login() {
                 'Content-Type': 'application/json'
             },
         }
-        fetch(URL_SERVIDOR + '/auth/login', config)
+        fetch(REACT_APP_SERVIDOR + '/auth/login', config)
             .then(res => res.json())
             .then(data => {
                 if (data.access_token) {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import "../styles.css";
 import "./telaenvio.css"
 import Relatorio from '../Relatorio/Relatorio.js'
-import { URL_SERVIDOR, ValidarTempoFimSessao } from '../utils/util'
+import { ValidarTempoFimSessao } from '../utils/util'
 import { useDadosRelatorio } from '../context/DadosRelatorioContext';
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
@@ -13,7 +13,7 @@ export default function TelaEnvio() {
     const [Exibir, SetExibir] = useState({ Loading: false, Relatorio: false });
     const { SetDadosRelatorio } = useDadosRelatorio();
     let navigate = useNavigate();
-
+    const {REACT_APP_SERVIDOR} = process.env;
     useEffect(() => {
         if (sessionStorage.getItem('FimSessaoMilesegundos') == null) {
             alert('Parece que você tentou acessar uma rota sem fazer LOGIN, você será redirecionado para a página de LOGIN.');
@@ -35,7 +35,7 @@ export default function TelaEnvio() {
             return;
         }
 
-        SetExibir({ Loading: true, Relatorio: false });
+        SetExibir({ BotaoEnviar: true, Relatorio: false });
         const ConfiguracaoRequisicao = ConfigurarRequisicao();
         FazerRequisicao(ConfiguracaoRequisicao);
     }
@@ -53,11 +53,11 @@ export default function TelaEnvio() {
 
     function FazerRequisicao(config) {
         const NotificacaoDeCarregamento = toast.loading('Carregando');
-        fetch(URL_SERVIDOR + '/upload', config)
+        fetch(REACT_APP_SERVIDOR + '/upload', config)
             .then(res => res.json())
             .then(data => {
                 if (data.statusCode !== undefined || null)
-                    throw new Error(`${data.statusCode} - ${data.message}`)
+                    throw new Error(data.message); //`${data.statusCode} - ${data.message}`
                 toast.dismiss(NotificacaoDeCarregamento);
                 toast.success('Relatório Rendezirado');
                 SetDadosRelatorio({
@@ -68,13 +68,14 @@ export default function TelaEnvio() {
                     Total_de_erros: data[4],
                     Todos_Os_Eventos: data[5]
                 })
+                SetExibir({ BotaoEnviar: false, Relatorio: true });
             })
             .catch(e => {
-                toast.error(e)
+                // console.log(e || e.message)
+                toast.dismiss(NotificacaoDeCarregamento);
+                toast.error(e.message)
+                SetExibir({BotaoEnviar: false, Relatorio: false})
             })
-            .finally(() => {
-                SetExibir({ Loading: false, Relatorio: true });
-            });
     }
     return (
         <header>
@@ -93,11 +94,11 @@ export default function TelaEnvio() {
                 </div>
                 <form onSubmit={Submit}>
                     <input type="file" name="file" aria-label='File browser example' accept=".zip" onChange={(value) => setArquivo(value.target.files[0])} />
-                    <button type='submit' className="button botaosubmit" disabled={!!Exibir.Loading}>Enviar</button>
+                    <button type='submit' className="button botaosubmit" disabled={!!Exibir.BotaoEnviar}>Enviar</button>
                 </form>
             </div>
             <div id='corpo'>
-                {!Exibir.Relatorio ? Recomendacoes() : Relatorio()}
+                {!!Exibir.Relatorio ?  Relatorio() : Recomendacoes()}
             </div>
         </header>
     )
