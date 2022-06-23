@@ -13,7 +13,7 @@ export default function TelaEnvio() {
     const [Exibir, SetExibir] = useState({ Loading: false, Relatorio: false });
     const { SetDadosRelatorio } = useDadosRelatorio();
     let navigate = useNavigate();
-    const {REACT_APP_SERVIDOR} = process.env;
+    const { REACT_APP_SERVIDOR } = process.env;
     useEffect(() => {
         if (sessionStorage.getItem('FimSessaoMilesegundos') == null) {
             alert('Parece que você tentou acessar uma rota sem fazer LOGIN, você será redirecionado para a página de LOGIN.');
@@ -56,8 +56,13 @@ export default function TelaEnvio() {
         fetch(REACT_APP_SERVIDOR + '/upload', config)
             .then(res => res.json())
             .then(data => {
+
                 if (data.statusCode !== undefined || null)
                     throw new Error(data.message); //`${data.statusCode} - ${data.message}`
+
+                if (data[0].length === 0 && data[0].length === 0)
+                    throw new Error('Arquivo inválido, verifique se todos há algum XML válido para operação, em caso de dúvida descompacte e compacte novamente para importação.')
+
                 toast.dismiss(NotificacaoDeCarregamento);
                 toast.success('Relatório Rendezirado');
                 SetDadosRelatorio({
@@ -74,7 +79,7 @@ export default function TelaEnvio() {
                 // console.log(e || e.message)
                 toast.dismiss(NotificacaoDeCarregamento);
                 toast.error(e.message)
-                SetExibir({BotaoEnviar: false, Relatorio: false})
+                SetExibir({ BotaoEnviar: false, Relatorio: false })
             })
     }
     return (
@@ -98,7 +103,7 @@ export default function TelaEnvio() {
                 </form>
             </div>
             <div id='corpo'>
-                {!!Exibir.Relatorio ?  Relatorio() : Recomendacoes()}
+                {!!Exibir.Relatorio ? Relatorio() : Recomendacoes()}
             </div>
         </header>
     )
